@@ -7,5 +7,3 @@
  */
 
 defined('TYPO3') or die('Access denied.');
-
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Backend\Template\Components\ButtonBar']['getButtonsHook']['MyExt'] = \UniversityOfCopenhagen\KuSaveclose\Hooks\SaveCloseHook::class . '->addSaveCloseButton';

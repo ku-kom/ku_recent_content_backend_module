@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2022-09-23UTC08:12:050">
+    <file source-language="en" datatype="plaintext" original="messages" date="2022-09-23UTC08:13:050">
         <header>
             <authorName>Nanna Ellegaard</authorName>
             <authorEmail>nel@adm.ku.dk</authorEmail>
         </header>
         <body>
-        <trans-unit id="error_msg" resname="error_msg">
-            <source>Error fetching data. Try again later.</source>
-        </trans-unit>
+
         </body>
     </file>
 </xliff>

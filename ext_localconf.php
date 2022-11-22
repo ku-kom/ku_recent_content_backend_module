@@ -20,13 +20,3 @@ if ($versionInformation->getMajorVersion() < 12) {
    ');
 }
 
-// Register plugin
-
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-
-ExtensionUtility::configurePlugin(
-  'ku_recent_content_backend_module',
-  'Pi1',
-  [\UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RssController::class => 'getFeed'],
-  []
-);

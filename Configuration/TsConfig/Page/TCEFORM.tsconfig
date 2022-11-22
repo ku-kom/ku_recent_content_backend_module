@@ -1,35 +1,3 @@
 #
 # TCEFORM
 #
-TCEFORM {
-    tt_content {
-        subheader {
-           types {
-                ku_recent_content_backend_module {
-                    disabled = 1
-                }
-            }
-        }
-        subheader {
-           types {
-                list {
-                    disabled = 1
-                }
-            }
-        }
-        header_link {
-            types {
-                ku_recent_content_backend_module {
-                    disabled = 1
-                }
-            }
-        }
-        header_link {
-           types {
-                list {
-                    disabled = 1
-                }
-            }
-        }
-    }
-}

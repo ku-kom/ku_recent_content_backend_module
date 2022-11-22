@@ -15,7 +15,7 @@ defined('TYPO3_MODE') || die();
 
 return [
     // icon identifier
-    'ku-rss-icon' => [
+    'ku-recent-content-backend-module' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:ku_recent_content_backend_module/Resources/Public/Icons/Extension.svg',
     ],
