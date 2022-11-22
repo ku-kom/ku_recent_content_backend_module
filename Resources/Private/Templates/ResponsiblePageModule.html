@@ -1,0 +1,61 @@
+
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:if condition="{responsible_name} || {responsible_email}">
+	<div class="callout callout-warning">
+		<div class="media">
+			<div class="media-left">
+				<span class="fa-stack fa-lg callout-icon">
+					<i class="fa fa-circle fa-stack-2x"></i>
+					<i class="fa fa-info fa-stack-1x"></i>
+				</span>
+			</div>
+			<div class="media-body">
+				<h4 class="callout-title">
+					<f:translate key="LLL:EXT:project/Resources/Private/Language/Backend/locallang.xlf:pageModuleResponsible.responsiblename">Responsible</f:translate>
+				</h4>
+				<div class="callout-body">
+					<f:render section="ResponsibleName" arguments="{_all}" />
+					<f:render section="LastChange" arguments="{_all}" />
+				</div>
+			</div>
+		</div>
+	</div>
+</f:if>
+
+
+<f:section name="ResponsibleName">
+	<p>
+		<strong>
+			<f:link.typolink parameter="{responsible_email}">
+				<f:if condition="{responsible_name}">
+					<f:then>{responsible_name}</f:then>
+					<f:else>{responsible_email}</f:else>
+				</f:if>
+			</f:link.typolink>
+		</strong>
+	</p>
+</f:section>
+
+
+<f:section name="LastChange">
+	<f:if condition="{userid} > 0">
+		<p>
+			<f:translate key="LLL:EXT:project/Resources/Private/Language/Backend/locallang.xlf:pageModuleResponsible.lastchangename">Last change</f:translate>
+			<f:render section="UserName" arguments="{_all}" />
+			<span title="{f:format.date(format:'%d.%m.%Y %H:%M', date:'@{tstamp}')}">(<p:format.readableDate>{tstamp}</p:format.readableDate>)</span>
+		</p>
+	</f:if>
+</f:section>
+
+
+<f:section name="UserName">
+	<f:link.typolink parameter="{email}">
+		<f:if condition="{realName}">
+			<f:then>{realName}</f:then>
+			<f:else>{username}</f:else>
+		</f:if>
+	</f:link.typolink>
+</f:section>
+
+</html>
