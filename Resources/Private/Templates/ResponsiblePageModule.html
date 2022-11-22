@@ -1,6 +1,4 @@
-
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-
 <f:if condition="{responsible_name} || {responsible_email}">
 	<div class="callout callout-warning">
 		<div class="media">
@@ -22,8 +20,6 @@
 		</div>
 	</div>
 </f:if>
-
-
 <f:section name="ResponsibleName">
 	<p>
 		<strong>
@@ -36,8 +32,6 @@
 		</strong>
 	</p>
 </f:section>
-
-
 <f:section name="LastChange">
 	<f:if condition="{userid} > 0">
 		<p>
@@ -47,8 +41,6 @@
 		</p>
 	</f:if>
 </f:section>
-
-
 <f:section name="UserName">
 	<f:link.typolink parameter="{email}">
 		<f:if condition="{realName}">

@@ -6,3 +6,7 @@ services:
 
   UniversityOfCopenhagen\kuRecentContentBackendModule\:
     resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+  
+  UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController:
+      tags: ['backend.controller']
