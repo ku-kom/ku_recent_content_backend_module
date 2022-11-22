@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace UniversityOfCopenhagen\kuRecentContentBackendModule\Hooks;
 
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
