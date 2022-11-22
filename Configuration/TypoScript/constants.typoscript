@@ -1,0 +1,10 @@
+plugin.tx_kuRecentContentBackendModule {
+    view {
+        # cat=plugin.tx_kuRecentContentBackendModule/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:ku_recent_content_backend_module/Resources/Private/Templates/
+        # cat=plugin.tx_kuRecentContentBackendModule/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:ku_recent_content_backend_module/Resources/Private/Partials/
+        # cat=plugin.tx_kuRecentContentBackendModule/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:ku_recent_content_backend_module/Resources/Private/Layouts/
+    }
+}

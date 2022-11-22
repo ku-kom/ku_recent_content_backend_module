@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2022-10-15UTC07:12:050">
+        <header>
+            <authorName>Nanna Ellegaard</authorName>
+            <authorEmail>nel@adm.ku.dk</authorEmail>
+        </header>
+        <body>
+        <trans-unit id="title" resname="title">
+            <source>Display RSS/Atom feed</source>
+        </trans-unit>
+        <trans-unit id="description" resname="description">
+            <source>Displays RSS or Atom feeds in a list.</source>
+        </trans-unit>
+        <trans-unit id="linklabel" resname="linklabel">
+            <source>Link to RSS feed</source>
+        </trans-unit>
+        <trans-unit id="items" resname="items">
+            <source>Number of items</source>
+        </trans-unit>
+         <trans-unit id="layuot" resname="layout">
+            <source>Select layout</source>
+        </trans-unit>
+        <trans-unit id="layuot_tiles" resname="layout_tiles">
+            <source>Tiles layout</source>
+        </trans-unit>
+        <trans-unit id="layuot_list" resname="layout_list">
+            <source>List layout</source>
+        </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,21 @@
+####################################
+#### NEW CONTENT ELEMENT WIZARD ####
+####################################
+
+mod.wizards.newContentElement.wizardItems {
+  // add the content elementS to the tab "plugins"
+  plugins {
+    elements {
+      ku_recent_content_backend_module {
+        iconIdentifier = ku-rss-icon
+        title = LLL:EXT:ku_recent_content_backend_module/Resources/Private/Language/locallang_be.xlf:title
+        description = LLL:EXT:ku_recent_content_backend_module/Resources/Private/Language/locallang_be.xlf:description
+        tt_content_defValues {
+          CType = list
+          list_type = ku_recent_content_backend_module_pi1
+        }
+      }
+    }
+    show := addToList(ku_recent_content_backend_module_pi1)
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "ku_recent_content_backend_module",
+    "version": "1.0.0",
+    "description": "Sitepackage for the project KU recent content backend module.",
+    "keywords": [
+        "TYPO3",
+        "Bootstrap",
+        "PHP"
+    ],
+    "author": "Nanna Ellegaard",
+    "license": "ISC"
+}
