@@ -7,6 +7,8 @@ use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Class PageModule
@@ -17,7 +19,7 @@ class PageModule
     /**
      * @var string
      */
-    protected $templatePathAndFile = 'EXT:project/Resources/Private/Templates/ResponsiblePageModule.html';
+    protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ResponsiblePageModule.html';
 
     /**
      * @param array $params
