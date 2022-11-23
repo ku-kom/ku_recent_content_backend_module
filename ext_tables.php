@@ -7,3 +7,20 @@
  */
 
 defined('TYPO3') or die('Access denied.');
+
+// Module System > Backend Users
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+    'ku_recent_content_backend_module',
+    'web',
+    'ku_recent_content_backend_module',
+    'after:web_info',
+    [
+        \UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController::class => 'index',
+        \UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController::class => 'index'
+    ],
+    [
+    'access' => 'user, group',
+    'icon' => 'EXT:ku_recent_content_backend_module/Resources/Public/Icons/Extension.svg',
+    'labels' => 'KU module',
+    ]
+);
