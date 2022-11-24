@@ -3,7 +3,10 @@
 <f:section name="Content">
     <h1>
         <f:translate key="moduleTitle" />
-    </h1> {message}
+    </h1>
+    <f:for each="{pages}" as="element">
+        <f:render partial="PageList" arguments="{element: element}" />
+    </f:for>
 </f:section>
 
 </html>

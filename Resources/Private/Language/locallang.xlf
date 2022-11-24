@@ -6,7 +6,9 @@
             <authorEmail>nel@adm.ku.dk</authorEmail>
         </header>
         <body>
-          
+          <trans-unit id="moduleTitle" resname="moduleTitle">
+            <source>KU module title</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>
