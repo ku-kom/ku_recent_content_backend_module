@@ -5,6 +5,7 @@ namespace UniversityOfCopenhagen\kuRecentContentBackendModule\Hooks;
 
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -19,7 +20,15 @@ class PageModule
     /**
      * @var string
      */
+<<<<<<< HEAD
     protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ResponsiblePageModule.html';
+=======
+<<<<<<< HEAD
+    protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ResponsiblePageModule.html';
+=======
+    protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ListModule.html';
+>>>>>>> dev
+>>>>>>> 8029fe847e8724118e87396cff393f79ba9052c3
 
     /**
      * @param array $params
@@ -60,7 +69,6 @@ class PageModule
      */
     protected function getPropertiesToPage(int $pageIdentifier, array $properties): array
     {
-        // $queryBuilder = DatabaseUtility::getQueryBuilderForTable('pages', true);
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages')->createQueryBuilder();
         $rows = $queryBuilder
             ->select(...$properties)
@@ -79,7 +87,6 @@ class PageModule
     protected function getLastChangedPropertiesToPage(int $pageIdentifier): array
     {
         $contentElements = $this->getContentElementsToPage($pageIdentifier);
-        // $queryBuilder = DatabaseUtility::getQueryBuilderForTable('sys_log');
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_log')->createQueryBuilder();
         $rows = $queryBuilder
             ->select('userid', 'tstamp')
@@ -105,10 +112,7 @@ class PageModule
      */
     protected function getUserPropertiesToIdentifier(int $userIdentifier): array
     {
-        // $queryBuilder = DatabaseUtility::getQueryBuilderForTable('be_users');
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('be_users')->createQueryBuilder();
-        
-        
         $rows = $queryBuilder
             ->select('username', 'realName', 'email')
             ->from('be_users')
@@ -132,9 +136,7 @@ class PageModule
      */
     protected function getContentElementsToPage(int $pageIdentifier): array
     {
-        // $queryBuilder = DatabaseUtility::getQueryBuilderForTable('tt_content', true);
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tt_content')->createQueryBuilder();
-        
         $rows = $queryBuilder
             ->select('uid')
             ->from('tt_content')
@@ -156,10 +158,9 @@ class PageModule
     protected function renderMarkup(array $properties): string
     {
         /** @var StandaloneView $standaloneView */
-        // $standaloneView = ObjectUtility::getObjectManager()->get(StandaloneView::class);
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $standaloneView = $objectManager->get(StandaloneView::class);
-        $standaloneView->getRequest()->setControllerExtensionName('in2template');
+        $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
+        $extensionName = $standaloneView->getRequest()->getControllerExtensionName();
+        $standaloneView->getRequest()->setControllerExtensionName($extensionName);
         $standaloneView->setTemplatePathAndFilename(GeneralUtility::getFileAbsFileName($this->templatePathAndFile));
         $standaloneView->assignMultiple($properties);
         return $standaloneView->render();
