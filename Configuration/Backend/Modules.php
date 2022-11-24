@@ -18,7 +18,7 @@ return [
         'access' => 'user',
         'workspaces' => 'live',
         'path' => '/module/page/ku_recent_content_backend_module',
-        'labels' => 'KU module',
+        'labels' => 'LLL:EXT:ku_recent_content_backend_module/Resources/Private/Language/Module/locallang_mod.xlf',
         'iconIdentifier' => 'ku-recent-content-backend-module',
         'extensionName' => 'kuRecentContentBackendModule',
         'controllerActions' => [

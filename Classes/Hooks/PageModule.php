@@ -8,8 +8,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Class PageModule
@@ -20,15 +18,7 @@ class PageModule
     /**
      * @var string
      */
-<<<<<<< HEAD
-    protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ResponsiblePageModule.html';
-=======
-<<<<<<< HEAD
-    protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ResponsiblePageModule.html';
-=======
     protected $templatePathAndFile = 'EXT:ku_recent_content_backend_module/Resources/Private/Templates/ListModule.html';
->>>>>>> dev
->>>>>>> 8029fe847e8724118e87396cff393f79ba9052c3
 
     /**
      * @param array $params
