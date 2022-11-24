@@ -23,7 +23,7 @@ return [
         'extensionName' => 'kuRecentContentBackendModule',
         'controllerActions' => [
             RecentContentController::class => [
-                'flash','tree','clipboard','links','fileReference','fileReferenceCreate',
+                'index, flash','tree','clipboard','links','fileReference','fileReferenceCreate',
             ],
         ],
     ]

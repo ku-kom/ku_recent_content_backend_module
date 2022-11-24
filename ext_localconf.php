@@ -19,12 +19,3 @@ if ($versionInformation->getMajorVersion() < 12) {
       @import "EXT:ku_recent_content_backend_module/Configuration/page.tsconfig"
    ');
 }
-
-call_user_func(
-   function () {
-       /**
-        * Show responsible person in backend page module
-        */
-       $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/db_layout.php']['drawHeaderHook'][] = \UniversityOfCopenhagen\kuRecentContentBackendModule\Hooks\PageModule::class;
-   }
-);

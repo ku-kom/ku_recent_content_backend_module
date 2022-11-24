@@ -1,0 +1,7 @@
+module.tx_kurecentcontentbackendmodule {
+    view {
+        templateRootPaths.0 = EXT:ku_recent_content_backend_module/Resources/Private/Backend/Templates/
+        partialRootPaths.0 = EXT:ku_recent_content_backend_module/Resources/Private/Backend/Partials/
+        layoutRootPaths.0 = EXT:ku_recent_content_backend_module/Resources/Private/Backend/Layouts/
+    }
+}

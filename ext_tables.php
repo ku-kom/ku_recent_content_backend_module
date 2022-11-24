@@ -16,11 +16,10 @@ defined('TYPO3') or die('Access denied.');
     'after:web_info',
     [
         \UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController::class => 'index',
-        \UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController::class => 'index'
     ],
     [
     'access' => 'user, group',
-    'icon' => 'EXT:ku_recent_content_backend_module/Resources/Public/Icons/Extension.svg',
+    'icon' => 'ku-recent-content-backend-module',
     'labels' => 'LLL:EXT:ku_recent_content_backend_module/Resources/Private/Language/Module/locallang_mod.xlf',
     ]
 );
