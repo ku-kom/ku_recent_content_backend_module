@@ -4,13 +4,13 @@
     <h1>
         <f:translate key="moduleTitle" />
     </h1> {_all} 
-    
+    <f:comment>
         <f:for each="{pages}" as="element">
-            <f:comment>
+            
             <f:render partial="PageList" arguments="{element: element}" />
-        </f:comment>
+        
         </f:for>
-   
+    </f:comment>
 </f:section>
 
 </html>
