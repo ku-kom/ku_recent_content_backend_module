@@ -89,4 +89,5 @@ final class RecentContentController extends ActionController
             ->fetchAll();
         return $result;
     }
+
 }
