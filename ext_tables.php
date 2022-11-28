@@ -16,7 +16,7 @@ if (TYPO3_MODE === 'BE') {
         'ku_recent_content_backend_module',
         'after:web_info',
         [
-            \UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController::class => 'index', 'show',
+            \UniversityOfCopenhagen\kuRecentContentBackendModule\Controller\RecentContentController::class => 'index',
         ],
         [
         'access' => 'user, group',
