@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace UniversityOfCopenhagen\kuRecentContentBackendModule\Controller;
 
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Http\Message\ResponseInterface;
@@ -14,22 +15,22 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 final class RecentContentController extends ActionController
 {
     protected ModuleTemplateFactory $moduleTemplateFactory;
+    protected ModuleTemplate $moduleTemplate;
     protected PageRepository $pageRepository;
 
     public function __construct(
-        ModuleTemplateFactory $moduleTemplateFactory,
+        ModuleTemplateFactory $moduleTemplateFactory
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
-        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);;
     }
 
     public function indexAction(): ResponseInterface
     {
-        $this->view->assignMultiple([
-            'pages' => $this->getRecentPages(100),
-        ]);
+        $this->view->assign('pages', $this->getRecentPages(100));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
+        $moduleTemplate->getDocHeaderComponent();
         $moduleTemplate->setContent($this->view->render());
         return $this->htmlResponse($moduleTemplate->renderContent());
     }
@@ -42,26 +43,28 @@ final class RecentContentController extends ActionController
         do {
             $results = $this->getRecentPagesBatch($batchLimit, $offset);
             for ($i = 0; $i < count($results); $i++) {
-                // if ($GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['uid']), 16)) {
-                    if ($GLOBALS['BE_USER']->recordEditAccessInternals('pages', $results[$i]['uid'])) {
-                        $results[$i]['isEditable'] = 1;
-                    }
-                    if (time() - $results[$i]['crdate'] <= 60 * 60 * 24 * 2) {
-                        $results[$i]['badges']['new'] = 1;
-                    }
-                    if (time() < $results[$i]['starttime'] && $results[$i]['hidden'] === 0) {
-                        $results[$i]['badges']['visibleInFuture'] = 1;
-                    }
-                    if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
-                        $results[$i]['badges']['visibleInPast'] = 1;
-                    }
-                    if (!empty($results[$i]['ku_lastpageupdates_timestamp']) && $results[$i]['ku_lastpageupdates_timestamp'] === 0) {
-                        $results[$i]['ku_lastpageupdates_timestamp'] = $results[$i]['tstamp'];
-                    }
-                    if (count($elements) < $limit) {
-                        $elements[] = $results[$i];
-                    }
-                // }
+            if ($GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['uid']), 16)) {
+                if ($GLOBALS['BE_USER']->recordEditAccessInternals('pages', $results[$i]['uid'])) {
+                    $results[$i]['isEditable'] = 1;
+                }
+                if (time() - $results[$i]['crdate'] <= 60 * 60 * 24 * 2) {
+                    $results[$i]['badges']['new'] = 1;
+                }
+                if (time() < $results[$i]['starttime'] && $results[$i]['hidden'] === 0) {
+                    $results[$i]['badges']['visibleInFuture'] = 1;
+                }
+                if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
+                    $results[$i]['badges']['visibleInPast'] = 1;
+                }
+                if (empty($results[$i]['ku_lastpageupdates_timestamp']) || $results[$i]['ku_lastpageupdates_timestamp'] === 0) {
+                    $results[$i]['ku_lastpageupdates_timestamp'] = $results[$i]['tstamp'];
+                } else {
+                    $results[$i]['ku_lastpageupdates_timestamp'];
+                }
+                if (count($elements) < $limit) {
+                    $elements[] = $results[$i];
+                }
+                }
                 $elements[] = $results[$i];
             }
             $offset += $batchLimit;
@@ -81,7 +84,7 @@ final class RecentContentController extends ActionController
         $result = $queryBuilder
             ->select('*')
             ->from('pages')
-            ->orderBy('crdate', 'DESC')
+            ->orderBy('ku_lastpageupdates_timestamp', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->execute()
