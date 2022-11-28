@@ -7,11 +7,14 @@
         </header>
         <body>
           <trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
-            <source>KU module</source>
-        </trans-unit>
-        <trans-unit id="mlang_labels_tabdescr" resname="mlang_labels_tabdescr">
-            <source>KU module description</source>
-        </trans-unit>
+                <source>KU recent content</source>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tabdescr" resname="mlang_labels_tabdescr">
+                <source>KU module description</source>
+            </trans-unit>
+            <trans-unit id="mlang_labels_tablabel" resname="mlang_labels_tablabel">
+                <source>Backend module to display user's recent modified content.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

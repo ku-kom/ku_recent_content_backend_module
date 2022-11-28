@@ -6,7 +6,9 @@
             <authorEmail>nel@adm.ku.dk</authorEmail>
         </header>
         <body>
-
+            <trans-unit id="itemsPerPage" resname="itemsPerPage">
+            <source>Antal sider/records</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

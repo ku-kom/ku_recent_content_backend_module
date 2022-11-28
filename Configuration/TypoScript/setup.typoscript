@@ -1,7 +1,16 @@
 module.tx_kurecentcontentbackendmodule {
     view {
-        templateRootPaths.0 = EXT:ku_recent_content_backend_module/Resources/Private/Templates/
-        partialRootPaths.0 = EXT:ku_recent_content_backend_module/Resources/Private/Partials/
-        layoutRootPaths.0 = EXT:ku_recent_content_backend_module/Resources/Private/Layouts/
+        templateRootPaths {
+            0 = EXT:ku_recent_content_backend_module/Resources/Private/Templates/
+            1 = {$module.tx_kurecentcontentbackendmodule.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:ku_recent_content_backend_module/Resources/Private/Partials/
+            1 = {$module.tx_kurecentcontentbackendmodule.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:ku_recent_content_backend_module/Resources/Private/Layouts/
+            1 = {$module.tx_kurecentcontentbackendmodule.view.layoutRootPath}
+        }
     }
 }

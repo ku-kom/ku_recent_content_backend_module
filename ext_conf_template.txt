@@ -1,0 +1,2 @@
+# cat=Data; type=int+; label=LLL:EXT:ku_recent_content_backend_module/Resources/Private/Language/locallang_be.xlf:itemsPerPage
+itemsPerPage = 100
