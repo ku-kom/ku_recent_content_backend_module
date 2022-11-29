@@ -22,7 +22,8 @@ final class RecentContentController extends ActionController
         ModuleTemplateFactory $moduleTemplateFactory
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
-        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);;
+        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+        ;
     }
 
     public function indexAction(): ResponseInterface
@@ -43,36 +44,50 @@ final class RecentContentController extends ActionController
         do {
             $results = $this->getRecentPagesBatch($batchLimit, $offset);
             for ($i = 0; $i < count($results); $i++) {
-            if ($GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['uid']), 16)) {
-                if ($GLOBALS['BE_USER']->recordEditAccessInternals('pages', $results[$i]['uid'])) {
-                    $results[$i]['isEditable'] = 1;
+                if ($GLOBALS['BE_USER']->doesUserHaveAccess($this->pageRepository->getPage($results[$i]['uid']), 16)) {
+                    if ($GLOBALS['BE_USER']->recordEditAccessInternals('pages', $results[$i]['uid'])) {
+                        $results[$i]['isEditable'] = 1;
+                    }
+                    if (time() - $results[$i]['crdate'] <= 60 * 60 * 24 * 2) {
+                        $results[$i]['badges']['new'] = 1;
+                    }
+                    if (time() < $results[$i]['starttime'] && $results[$i]['hidden'] === 0) {
+                        $results[$i]['badges']['visibleInFuture'] = 1;
+                    }
+                    if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
+                        $results[$i]['badges']['visibleInPast'] = 1;
+                    }
+                    if (empty($results[$i]['ku_lastpageupdates_timestamp']) || $results[$i]['ku_lastpageupdates_timestamp'] === 0) {
+                        $results[$i]['ku_lastpageupdates_timestamp'] = $results[$i]['tstamp'];
+                    } else {
+                        $results[$i]['ku_lastpageupdates_timestamp'];
+                    }
+                    $results[$i]['doktypeLabel'] = $this->getDoktypeTranslationString((int)$results[$i]['doktype']);
+                    if (substr($results[$i]['doktypeLabel'], 0, 4) === 'LLL:') {
+                        $results[$i]['doktypeLabelIsKey'] = true;
+                    }
+                    if (count($elements) < $limit) {
+                        $elements[] = $results[$i];
+                    }
                 }
-                if (time() - $results[$i]['crdate'] <= 60 * 60 * 24 * 2) {
-                    $results[$i]['badges']['new'] = 1;
-                }
-                if (time() < $results[$i]['starttime'] && $results[$i]['hidden'] === 0) {
-                    $results[$i]['badges']['visibleInFuture'] = 1;
-                }
-                if (time() > $results[$i]['endtime'] && $results[$i]['endtime'] > 0 && $results[$i]['hidden'] === 0) {
-                    $results[$i]['badges']['visibleInPast'] = 1;
-                }
-                if (empty($results[$i]['ku_lastpageupdates_timestamp']) || $results[$i]['ku_lastpageupdates_timestamp'] === 0) {
-                    $results[$i]['ku_lastpageupdates_timestamp'] = $results[$i]['tstamp'];
-                } else {
-                    $results[$i]['ku_lastpageupdates_timestamp'];
-                }
-                if (count($elements) < $limit) {
-                    $elements[] = $results[$i];
-                }
-                }
-                $elements[] = $results[$i];
             }
             $offset += $batchLimit;
         } while (count($elements) < $limit && count($results) === $batchLimit);
-        debug($elements);
         return $elements;
     }
     
+
+    protected function getDoktypeTranslationString(int $key): ?string
+    {
+        foreach ($GLOBALS['TCA']['pages']['columns']['doktype']['config']['items'] as $item) {
+            if ((int)$item[1] === $key) {
+                return $item[0];
+            }
+        }
+
+        return null;
+    }
+
     protected function getRecentPagesBatch(int $limit = 100, int $offset = 0): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages')->createQueryBuilder();
