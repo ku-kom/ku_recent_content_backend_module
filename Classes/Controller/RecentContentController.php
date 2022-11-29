@@ -6,24 +6,31 @@ namespace UniversityOfCopenhagen\kuRecentContentBackendModule\Controller;
 
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Psr\Http\Message\ResponseInterface;
 
 final class RecentContentController extends ActionController
 {
     protected ModuleTemplateFactory $moduleTemplateFactory;
     protected ModuleTemplate $moduleTemplate;
     protected PageRepository $pageRepository;
+    protected iconFactory $iconFactory;
 
     public function __construct(
-        ModuleTemplateFactory $moduleTemplateFactory
+        ModuleTemplateFactory $moduleTemplateFactory,
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-        ;
+        $this->iconFactory = GeneralUtility::makeInstance(iconFactory::class);
+       
     }
 
     public function indexAction(): ResponseInterface
@@ -31,7 +38,17 @@ final class RecentContentController extends ActionController
         $this->view->assign('pages', $this->getRecentPages(100));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
-        $moduleTemplate->getDocHeaderComponent();
+        
+        $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        //$uri = (string)$uriBuilder->buildUriFromRoute($routeName, $arguments, UriBuilder::SHAREABLE_URL);
+        $list = $buttonBar->makeLinkButton()
+            ->setHref('#')
+            ->setTitle('Button title')
+            ->setShowLabelText('Link')
+            ->setIcon($moduleTemplate->getIconFactory()->getIcon('actions-extension-import', Icon::SIZE_SMALL));
+        $buttonBar->addButton($list, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+
         $moduleTemplate->setContent($this->view->render());
         return $this->htmlResponse($moduleTemplate->renderContent());
     }
@@ -105,5 +122,10 @@ final class RecentContentController extends ActionController
             ->execute()
             ->fetchAll();
         return $result;
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 }
