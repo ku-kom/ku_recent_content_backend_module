@@ -26,8 +26,11 @@ final class RecentContentController extends ActionController
 
     public function __construct(
         ModuleTemplateFactory $moduleTemplateFactory,
+        UriBuilder $uriBuilder,
+        
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
+        $this->uriBuilder = $uriBuilder;
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $this->iconFactory = GeneralUtility::makeInstance(iconFactory::class);
        
@@ -40,8 +43,8 @@ final class RecentContentController extends ActionController
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
         
         $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        //$uri = (string)$uriBuilder->buildUriFromRoute($routeName, $arguments, UriBuilder::SHAREABLE_URL);
+        //$uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $uri = (string)$this->uriBuilder->buildUriFromRoute($routeName, $arguments, UriBuilder::SHAREABLE_URL);
         $list = $buttonBar->makeLinkButton()
             ->setHref('#')
             ->setTitle('Button title')
