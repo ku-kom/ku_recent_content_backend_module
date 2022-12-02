@@ -97,7 +97,7 @@ final class RecentContentController extends ActionController
             }
             $offset += $batchLimit;
         } while (count($elements) < $limit && count($results) === $batchLimit);
-        debug($elements);
+
         return $elements;
     }
     
