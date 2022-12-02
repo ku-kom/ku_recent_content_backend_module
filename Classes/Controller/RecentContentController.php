@@ -30,7 +30,6 @@ final class RecentContentController extends ActionController
         $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $this->iconFactory = GeneralUtility::makeInstance(iconFactory::class);
-       
     }
 
     public function indexAction(): ResponseInterface
@@ -83,6 +82,11 @@ final class RecentContentController extends ActionController
                     if (substr($results[$i]['doktypeLabel'], 0, 4) === 'LLL:') {
                         $results[$i]['doktypeLabelIsKey'] = true;
                     }
+
+                    if ($results[$i]['cruser_id']) {
+                        $results[$i]['ku_creator'] = $this->getAuthorRealName($results[$i]['cruser_id']);
+                    }
+                
                     if (count($elements) < $limit) {
                         $elements[] = $results[$i];
                     }
@@ -90,6 +94,7 @@ final class RecentContentController extends ActionController
             }
             $offset += $batchLimit;
         } while (count($elements) < $limit && count($results) === $batchLimit);
+        
         return $elements;
     }
     
@@ -103,6 +108,27 @@ final class RecentContentController extends ActionController
         }
 
         return null;
+    }
+
+    protected function getAuthorRealName(int $authorUid): ?string
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('be_users');
+
+        $result = $queryBuilder
+        ->select('realName')
+        ->from('be_users')
+        ->where($queryBuilder->expr()->eq(
+            'uid',
+            $queryBuilder->createNamedParameter($authorUid, \PDO::PARAM_STR)
+        ))
+        ->execute() // Change to executeQuery() in TYPO3 v.12
+        ->fetch();
+
+        $name = $result['realName'];
+
+        if ($result) {
+            return $name;
+        }
     }
 
     protected function getRecentPagesBatch(int $limit = 100, int $offset = 0): array

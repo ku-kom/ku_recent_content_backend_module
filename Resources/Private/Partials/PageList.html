@@ -1,33 +1,33 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
-<div class="o-recentcontentwidget__element">
+<div class="module-recentcontent">
     <f:spaceless>
         <div>
             <strong class="c-title">
                 <f:if condition="{element.title}">
                     <f:then>{element.title}</f:then>
                     <f:else>
-                        <f:translate key="widgets.recentContent.fallbackTitle" extensionName="recentContentWidget" />
+                        <f:translate key="fallbackTitle" extensionName="ku_recent_content_backend_module" />
                     </f:else>
                 </f:if>
             </strong>
             <f:if condition="{element.badges.new}">
                 <span class="c-badge c-badge--green">
-                    <f:translate key="widgets.recentContent.badge.new" extensionName="recentContentWidget" />
+                    <f:translate key="badge.new" extensionName="ku_recent_content_backend_module" />
                 </span>
             </f:if>
             <f:if condition="{element.hidden}">
                 <span class="c-badge c-badge--red">
-                    <f:translate key="widgets.recentContent.badge.hidden" extensionName="recentContentWidget" />
+                    <f:translate key="badge.hidden" extensionName="ku_recent_content_backend_module" />
                 </span>
             </f:if>
             <f:if condition="{element.badges.visibleInFuture}">
                 <span class="c-badge c-badge--yellow">
-                    <f:translate key="widgets.recentContent.badge.visibleInFuture" extensionName="recentContentWidget" />
+                    <f:translate key="badge.visibleInFuture" extensionName="ku_recent_content_backend_module" />
                 </span>
             </f:if>
             <f:if condition="{element.badges.visibleInPast}">
                 <span class="c-badge c-badge--yellow">
-                    <f:translate key="widgets.recentContent.badge.visibleInPast" extensionName="recentContentWidget" />
+                    <f:translate key="badge.visibleInPast" extensionName="ku_recent_content_backend_module" />
                 </span>
             </f:if>
         </div>
@@ -44,17 +44,23 @@
             </span>
             <span> | </span>
             <span>
-                <f:translate key="widgets.recentContent.pageId" extensionName="recentContentWidget" />&nbsp;{element.uid}</span>
+                <f:translate key="pageId" extensionName="ku_recent_content_backend_module" />&nbsp;{element.uid}</span>
             <br>
             <span>
                 <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.timestamp" />:&nbsp;
-                <f:format.date format="{f:translate(key: 'widgets.recentContent.dateFormat', extensionName: 'recentContentWidget')}" date="{element.ku_lastpageupdates_timestamp}" />,
-                <f:format.date format="{f:translate(key: 'widgets.recentContent.timeFormat', extensionName: 'recentContentWidget')}" date="{element.ku_lastpageupdates_timestamp}" /></span>
+                <f:format.date format="{f:translate(key: 'dateFormat', extensionName: 'ku_recent_content_backend_module')}" date="{element.ku_lastpageupdates_timestamp}" />,
+                <f:format.date format="{f:translate(key: 'timeFormat', extensionName: 'ku_recent_content_backend_module')}" date="{element.ku_lastpageupdates_timestamp}" /></span>
+                <f:if condition="{element.ku_creator}">
+                    <f:then>
+                        <div class="module_ku_creator">
+                            <f:translate key="created_by" extensionName="ku_recent_content_backend_module" />: {element.ku_creator} </div>
+                    </f:then> 
+                </f:if>
         </div>
         <div class="u-space-top">
-            <f:be.link class="u-dashboard-button dashboard-button" route="web_layout" parameters="{id: element.uid}">
+            <f:be.link class="ku-recentcontent-module-button" route="web_layout" parameters="{id: element.uid}">
                 <core:icon identifier="actions-document-view" size="small" />&nbsp;
-                <f:translate key="widgets.recentContent.showPageBackend" extensionName="recentContentWidget" />
+                <f:translate key="showPageBackend" extensionName="ku_recent_content_backend_module" />
             </f:be.link>
         </div>
     </f:spaceless>

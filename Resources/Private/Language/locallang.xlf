@@ -9,6 +9,54 @@
           <trans-unit id="moduleTitle" resname="moduleTitle">
             <source>KU module title</source>
         </trans-unit>
+        <trans-unit id="title" xml:space="preserve">
+				<source>Your recent content</source>
+			</trans-unit>
+			<trans-unit id="description" xml:space="preserve">
+				<source>Displays a list of recently updated or created content elements which you have acces to.</source>
+			</trans-unit>
+			<trans-unit id="fallbackTitle" xml:space="preserve">
+				<source>[Untitled]</source>
+			</trans-unit>
+			<trans-unit id="badge.new" xml:space="preserve">
+				<source>New</source>
+			</trans-unit>
+			<trans-unit id="badge.hidden" xml:space="preserve">
+				<source>Hidden</source>
+			</trans-unit>
+			<trans-unit id="badge.visibleInPast" xml:space="preserve">
+				<source>Visible in past</source>
+			</trans-unit>
+			<trans-unit id="badge.visibleInFuture" xml:space="preserve">
+				<source>Visible in future</source>
+			</trans-unit>
+			<trans-unit id="at" xml:space="preserve">
+				<source>at</source>
+			</trans-unit>
+			<trans-unit id="dateFormat" xml:space="preserve">
+				<source>d.m.Y</source>
+			</trans-unit>
+			<trans-unit id="timeFormat" xml:space="preserve">
+				<source>H:i:s</source>
+			</trans-unit>
+			<trans-unit id="contentId" xml:space="preserve">
+				<source>Content element ID:</source>
+			</trans-unit>
+			<trans-unit id="pageId" xml:space="preserve">
+				<source>Page ID:</source>
+			</trans-unit>
+			<trans-unit id="showPageBackend" xml:space="preserve">
+				<source>Show page in backend</source>
+			</trans-unit>
+			<trans-unit id="title" xml:space="preserve">
+				<source>Your recent pages</source>
+			</trans-unit>
+			<trans-unit id="description" xml:space="preserve">
+				<source>Displays a list of recently updated or created pages which you have access to.</source>
+			</trans-unit>
+			<trans-unit id="created_by" xml:space="preserve">
+				<source>Created by</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>
