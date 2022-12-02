@@ -2,14 +2,14 @@
 <div class="module-recentcontent">
     <f:spaceless>
         <div>
-            <strong class="c-title">
+            <div class="c-title">
                 <f:if condition="{element.title}">
                     <f:then>{element.title}</f:then>
                     <f:else>
                         <f:translate key="fallbackTitle" extensionName="ku_recent_content_backend_module" />
                     </f:else>
                 </f:if>
-            </strong>
+            </div>
             <f:if condition="{element.badges.new}">
                 <span class="c-badge c-badge--green">
                     <f:translate key="badge.new" extensionName="ku_recent_content_backend_module" />
@@ -47,7 +47,7 @@
                 <f:translate key="pageId" extensionName="ku_recent_content_backend_module" />&nbsp;{element.uid}</span>
             <br>
             <span>
-                <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.timestamp" />:&nbsp;
+                <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.timestamp" />:
                 <f:format.date format="{f:translate(key: 'dateFormat', extensionName: 'ku_recent_content_backend_module')}" date="{element.ku_lastpageupdates_timestamp}" />,
                 <f:format.date format="{f:translate(key: 'timeFormat', extensionName: 'ku_recent_content_backend_module')}" date="{element.ku_lastpageupdates_timestamp}" /></span>
                 <f:if condition="{element.ku_creator}">
@@ -57,7 +57,7 @@
                     </f:then> 
                 </f:if>
         </div>
-        <div class="u-space-top">
+        <div class="btn-wrapper">
             <f:be.link class="ku-recentcontent-module-button" route="web_layout" parameters="{id: element.uid}">
                 <core:icon identifier="actions-document-view" size="small" />&nbsp;
                 <f:translate key="showPageBackend" extensionName="ku_recent_content_backend_module" />

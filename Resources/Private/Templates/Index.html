@@ -2,7 +2,7 @@
 <f:layout name="Default" />
 
 <f:section name="content">
-    <h1><f:translate key="moduleTitle" /></h1>
+    <h1 class="ku-recent-content-title"><f:translate key="moduleTitle" /></h1>
     <f:for each="{pages}" as="element">
         <f:render partial="PageList" arguments="{element: element}" />
     </f:for>

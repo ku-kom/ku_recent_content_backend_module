@@ -10,6 +10,7 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -34,6 +35,8 @@ final class RecentContentController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
+        GeneralUtility::makeInstance(AssetCollector::class)->addStyleSheet('ku_recent_content_backend_module', 'EXT:ku_recent_content_backend_module/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
+
         $this->view->assign('pages', $this->getRecentPages(100));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
@@ -94,7 +97,7 @@ final class RecentContentController extends ActionController
             }
             $offset += $batchLimit;
         } while (count($elements) < $limit && count($results) === $batchLimit);
-        
+        debug($elements);
         return $elements;
     }
     

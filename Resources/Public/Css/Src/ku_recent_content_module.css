@@ -1,0 +1,35 @@
+/*
+* Backend module ku_recent_content_module
+*/
+.ku-recent-content-title {
+    margin-bottom: 10px;
+}
+
+.module-recentcontent+.module-recentcontent {
+    margin-top: 1rem;
+}
+
+.module-recentcontent .btn-wrapper {
+    margin-top: 5px;
+}
+
+.ku-recentcontent-module-button {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 3px;
+    background: var(--bs-gray-800);
+    color: var(--bs-white);
+    padding: .4rem .7rem;
+    text-decoration: none;
+}
+
+.ku-recentcontent-module-button:hover {
+    background: var(--bs-orange);
+    color: var(--bs-white);
+    text-decoration: inherit;
+}
+
+.c-title {
+    font-size: .9rem;
+    font-weight: 700;
+}
