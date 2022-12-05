@@ -7,7 +7,7 @@
         </header>
         <body>
         <trans-unit id="itemsPerPage">
-            <source>Antal sider/records</source>
+            <source>Number of pages/records</source>
         </trans-unit>
         </body>
     </file>
