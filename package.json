@@ -1,6 +1,6 @@
 {
     "name": "ku_recent_content_backend_module",
-    "version": "1.0.4",
+    "version": "1.0.0",
     "description": "Backend module to display user's recent modified content.",
     "main": "",
 	"scripts": {
