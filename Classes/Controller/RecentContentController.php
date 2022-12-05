@@ -37,7 +37,7 @@ final class RecentContentController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        GeneralUtility::makeInstance(AssetCollector::class)->addStyleSheet('ku_recent_content_backend_module', 'EXT:ku_recent_content_backend_module/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
+        GeneralUtility::makeInstance(AssetCollector::class)->addStyleSheet($this->request->getControllerExtensionKey(), 'EXT:'. $this->request->getControllerExtensionKey() .'/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
 
         $this->view->assign('pages', $this->getRecentPages($this->listItems));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
@@ -60,7 +60,7 @@ final class RecentContentController extends ActionController
     protected function getRecentPages(int $limit): array
     {
         $elements = [];
-        $batchLimit = $this->listItems;
+        $batchLimit = $limit;
         $offset = 0;
         do {
             $results = $this->getRecentPagesBatch($batchLimit, $offset);
@@ -99,7 +99,7 @@ final class RecentContentController extends ActionController
             }
             $offset += $batchLimit;
         } while (count($elements) < $limit && count($results) === $batchLimit);
-
+    
         return $elements;
     }
     
