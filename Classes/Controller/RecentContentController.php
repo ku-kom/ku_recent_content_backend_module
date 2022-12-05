@@ -37,11 +37,12 @@ final class RecentContentController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
+        // Add stylesheet
         GeneralUtility::makeInstance(AssetCollector::class)->addStyleSheet($this->request->getControllerExtensionKey(), 'EXT:'. $this->request->getControllerExtensionKey() .'/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
 
         $this->view->assign('pages', $this->getRecentPages($this->listItems));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        // Adding title, menus, buttons, etc. using $moduleTemplate ...
+ 
         
         $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
@@ -153,10 +154,5 @@ final class RecentContentController extends ActionController
             ->execute()
             ->fetchAll();
         return $result;
-    }
-
-    protected function getLanguageService(): LanguageService
-    {
-        return $GLOBALS['LANG'];
     }
 }
