@@ -57,6 +57,9 @@
 			<trans-unit id="created_by" xml:space="preserve">
 				<source>Created by</source>
 			</trans-unit>
+			<trans-unit id="subsite" xml:space="preserve">
+				<source>Subsite</source>
+			</trans-unit>
         </body>
     </file>
 </xliff>

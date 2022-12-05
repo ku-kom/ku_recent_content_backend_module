@@ -8,6 +8,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Page\AssetCollector;
@@ -26,9 +27,10 @@ final class RecentContentController extends ActionController
     protected iconFactory $iconFactory;
 
     public function __construct(
-        ModuleTemplateFactory $moduleTemplateFactory,
+        ModuleTemplateFactory $moduleTemplateFactory
     ) {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
+        $this->listItems = (int)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('ku_recent_content_backend_module', 'itemsPerPage') ?? 100;
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $this->iconFactory = GeneralUtility::makeInstance(iconFactory::class);
     }
@@ -37,7 +39,7 @@ final class RecentContentController extends ActionController
     {
         GeneralUtility::makeInstance(AssetCollector::class)->addStyleSheet('ku_recent_content_backend_module', 'EXT:ku_recent_content_backend_module/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
 
-        $this->view->assign('pages', $this->getRecentPages(100));
+        $this->view->assign('pages', $this->getRecentPages($this->listItems));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         // Adding title, menus, buttons, etc. using $moduleTemplate ...
         
@@ -58,7 +60,7 @@ final class RecentContentController extends ActionController
     protected function getRecentPages(int $limit): array
     {
         $elements = [];
-        $batchLimit = 100;
+        $batchLimit = $this->listItems;
         $offset = 0;
         do {
             $results = $this->getRecentPagesBatch($batchLimit, $offset);
