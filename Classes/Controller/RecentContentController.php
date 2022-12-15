@@ -5,53 +5,46 @@ declare(strict_types=1);
 namespace UniversityOfCopenhagen\kuRecentContentBackendModule\Controller;
 
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Localization\LanguageService;
 
 final class RecentContentController extends ActionController
 {
-    protected ModuleTemplateFactory $moduleTemplateFactory;
-    protected ModuleTemplate $moduleTemplate;
-    protected PageRepository $pageRepository;
-    protected iconFactory $iconFactory;
 
     public function __construct(
-        ModuleTemplateFactory $moduleTemplateFactory
+        protected ModuleTemplateFactory $moduleTemplateFactory,
+        protected PageRepository $pageRepository,
+        protected iconFactory $iconFactory
     ) {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->listItems = (int)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('ku_recent_content_backend_module', 'itemsPerPage') ?? 100;
-        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-        $this->iconFactory = GeneralUtility::makeInstance(iconFactory::class);
     }
 
     public function indexAction(): ResponseInterface
     {
-        // Add stylesheet
-        GeneralUtility::makeInstance(AssetCollector::class)->addStyleSheet($this->request->getControllerExtensionKey(), 'EXT:'. $this->request->getControllerExtensionKey() .'/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
-
         $this->view->assign('pages', $this->getRecentPages($this->listItems));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
  
-        
+        $moduleTemplate->getPageRenderer()->addCssFile('EXT:ku_recent_content_backend_module/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
         $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
-        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        //$uri = (string)$this->uriBuilder->buildUriFromRoute($routeName, '', UriBuilder::SHAREABLE_URL);
-        $list = $buttonBar->makeLinkButton()
-            ->setHref('#')
-            ->setTitle('Button title')
-            ->setShowLabelText('Link')
-            ->setIcon($moduleTemplate->getIconFactory()->getIcon('actions-document-info', Icon::SIZE_SMALL));
-        $buttonBar->addButton($list, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+
+        $shortCutButton = $buttonBar->makeShortcutButton()->setRouteIdentifier('web_KuRecentContentBackendModuleTxKurecentcontentbackendmodule');
+        $buttonBar->addButton($shortCutButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+
+        $link = GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoute('web_KuRecentContentBackendModuleTxKurecentcontentbackendmodule');
+        $reloadButton = $buttonBar->makeLinkButton()
+            ->setHref($link)
+            ->setTitle($this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:labels.reload'))
+            ->setIcon($this->iconFactory->getIcon('actions-refresh', Icon::SIZE_SMALL));
+        $buttonBar->addButton($reloadButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
 
         $moduleTemplate->setContent($this->view->render());
         return $this->htmlResponse($moduleTemplate->renderContent());
@@ -153,5 +146,13 @@ final class RecentContentController extends ActionController
             ->execute()
             ->fetchAll();
         return $result;
+    }
+
+       /**
+     * @return LanguageService
+     */
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 }
