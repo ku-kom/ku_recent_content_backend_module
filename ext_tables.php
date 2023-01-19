@@ -8,8 +8,18 @@
 
 defined('TYPO3') or die('Access denied.');
 
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 // Module System > Backend Users
-if (TYPO3_MODE === 'BE') {
+$versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+if ($versionInformation->getMajorVersion() < 12) {
+    $query = "TYPO3_MODE === 'BE'";
+} else {
+    $query = ApplicationType::fromRequest($request)->isFrontend();
+}
+
+if ($query) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'ku_recent_content_backend_module',
         'web',
