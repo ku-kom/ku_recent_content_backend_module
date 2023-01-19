@@ -16,15 +16,17 @@ use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 final class RecentContentController extends ActionController
 {
-
     public function __construct(
         protected ModuleTemplateFactory $moduleTemplateFactory,
         protected PageRepository $pageRepository,
-        protected iconFactory $iconFactory
+        protected iconFactory $iconFactory,
+        protected PageRenderer $pageRenderer,
     ) {
+        $this->pageRenderer = $pageRenderer;
         $this->listItems = (int)GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('ku_recent_content_backend_module', 'itemsPerPage') ?? 100;
     }
 
@@ -32,8 +34,7 @@ final class RecentContentController extends ActionController
     {
         $this->view->assign('pages', $this->getRecentPages($this->listItems));
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
- 
-        $moduleTemplate->getPageRenderer()->addCssFile('EXT:ku_recent_content_backend_module/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
+        $this->pageRenderer->addCssFile('EXT:ku_recent_content_backend_module/Resources/Public/Css/Dist/ku_recent_content_module.min.css');
         $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
 
         $shortCutButton = $buttonBar->makeShortcutButton()->setRouteIdentifier('web_KuRecentContentBackendModuleTxKurecentcontentbackendmodule');
